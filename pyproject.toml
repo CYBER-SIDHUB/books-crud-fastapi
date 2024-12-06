@@ -2,7 +2,8 @@
 name = "books-crud-fastapi"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+package-mode = false
+authors = ["Siddharth Mishra <mishra07.siddharth@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
