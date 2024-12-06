@@ -21,3 +21,5 @@ It is recommended to test the available APIs from ``[GET] /docs``
 4. Run `poetry run uvicorn app.main:app` to serve the app
 
 (note: you'll need to have python installed)
+
+## Adding Devops pipeline
