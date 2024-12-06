@@ -1,0 +1,46 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Log in to Docker Hub
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # Build and push the Docker image
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_NAME="siddmi0407/my-python-app:latest"
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
+
+      # Set up kubectl
+      - name: Set up Kubernetes
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
+          kubectl config set-context --current --namespace=stage
+
+      # Deploy to Kubernetes (Stage)
+      - name: Deploy to Stage Namespace
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+
+      # Deploy to Kubernetes (Production)
+      - name: Deploy to Production Namespace
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          kubectl config set-context --current --namespace=production
+          kubectl apply -f deployment-prod.yaml
+          kubectl apply -f service-prod.yaml
