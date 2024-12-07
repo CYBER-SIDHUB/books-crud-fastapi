@@ -3,6 +3,8 @@ FROM python:3.10.15-slim
 
 # Set environment variables to prevent Python from buffering outputs
 ENV PYTHONUNBUFFERED=1 \
+    POETRY_HOME=/opt/poetry \
+    PATH="/opt/poetry/bin:$PATH" \
     POETRY_VIRTUALENVS_CREATE=false \
     PYTHONPATH=/app
 
@@ -15,15 +17,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    chmod +x $POETRY_HOME/bin/poetry
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the Poetry files
+# Copy Poetry files
 COPY poetry.lock pyproject.toml /app/
 
-# Install dependencies
+# Install project dependencies
 RUN poetry install --no-root --no-interaction --no-ansi
 
 # Copy the rest of the application code
