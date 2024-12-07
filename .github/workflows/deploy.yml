@@ -3,9 +3,8 @@ name: Deploy to Kubernetes
 on:
   push:
     branches:
-      # - 'release/*'  # Trigger the workflow on pushes to the main branch
-      # - 'master'
-      - master
+      - 'release/*'  # Trigger the workflow on pushes to the main branch
+      - 'master'
       
 jobs:
   build-and-deploy:
