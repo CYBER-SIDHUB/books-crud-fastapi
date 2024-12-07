@@ -26,17 +26,21 @@ jobs:
           docker push $IMAGE_NAME
 
       # Set up kubectl
-      - name: Set up Kubernetes
+      - name: Set up Kubernetes Configuration
         run: |
-            mkdir -p ~/.kube
-            echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
-            chmod 600 ~/.kube/config
-
-        # run: |
-        #   echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
-        #   kubectl config set-context --current --namespace=stage
-      - name: Verify Kubernetes Connection
-        run: |
+          mkdir -p ~/.minikube/profiles/minikube
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CLIENT_CERT }}" | base64 --decode > ~/.minikube/profiles/minikube/client.crt
+          echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode > ~/.minikube/profiles/minikube/client.key
+          echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode > ~/.minikube/ca.crt
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
+          chmod 600 ~/.minikube/profiles/minikube/client.crt
+          chmod 600 ~/.minikube/profiles/minikube/client.key
+          chmod 600 ~/.minikube/ca.crt
+          chmod 600 ~/.kube/config
+      
+      - name: Test Kubernetes Connection
+        run: | 
           kubectl get nodes
 
       # Deploy to Kubernetes (Stage)
