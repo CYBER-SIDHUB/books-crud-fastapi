@@ -34,7 +34,7 @@ jobs:
           echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode > ~/.minikube/profiles/minikube/client.key
           echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode > ~/.minikube/ca.crt
           echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
-          sed -i 's|https://192.168.49.2:8443|https://02fa-2405-201-303c-4069-da14-9d4f-58aa-624.ngrok-free.app|g' ~/.kube/config
+          sed -i 's|https://192.168.49.2:8443|https://e95e-2405-201-303c-4069-da14-9d4f-58aa-624.ngrok-free.app|g' ~/.kube/config
           chmod 600 ~/.minikube/profiles/minikube/client.crt
           chmod 600 ~/.minikube/profiles/minikube/client.key
           chmod 600 ~/.minikube/ca.crt
