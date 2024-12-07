@@ -39,6 +39,9 @@ jobs:
           chmod 600 ~/.minikube/profiles/minikube/client.key
           chmod 600 ~/.minikube/ca.crt
           chmod 600 ~/.kube/config
+
+          ls -l ~/.minikube/profiles/minikube
+          ls -l ~/.kube
       
       - name: Test Kubernetes Connection
         run: | 
