@@ -34,6 +34,7 @@ jobs:
           echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode > ~/.minikube/profiles/minikube/client.key
           echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode > ~/.minikube/ca.crt
           echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
+          sed -i 's|/home/devsidd/.minikube|/home/runner/.minikube|g' ~/.kube/config
           chmod 600 ~/.minikube/profiles/minikube/client.crt
           chmod 600 ~/.minikube/profiles/minikube/client.key
           chmod 600 ~/.minikube/ca.crt
