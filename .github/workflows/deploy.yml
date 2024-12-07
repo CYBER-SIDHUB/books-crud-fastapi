@@ -35,6 +35,9 @@ jobs:
         # run: |
         #   echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
         #   kubectl config set-context --current --namespace=stage
+      - name: Verify Kubernetes Connection
+        run: |
+          kubectl get nodes
 
       # Deploy to Kubernetes (Stage)
       - name: Deploy to Stage Namespace
