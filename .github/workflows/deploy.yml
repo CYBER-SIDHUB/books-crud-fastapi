@@ -28,8 +28,13 @@ jobs:
       # Set up kubectl
       - name: Set up Kubernetes
         run: |
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
-          kubectl config set-context --current --namespace=stage
+            mkdir -p ~/.kube
+            echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
+            chmod 600 ~/.kube/config
+
+        # run: |
+        #   echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
+        #   kubectl config set-context --current --namespace=stage
 
       # Deploy to Kubernetes (Stage)
       - name: Deploy to Stage Namespace
