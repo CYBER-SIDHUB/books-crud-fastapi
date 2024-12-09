@@ -40,9 +40,6 @@ jobs:
           
           sudo chmod 600 /home/devsidd/.minikube/profiles/minikube/*
           sudo chmod 600 /home/devsidd/.kube/config
-          
-          ls -l /home/devsidd/.minikube/profiles/minikube
-          ls -l /home/devsidd/.kube
       
       - name: Test Kubernetes Connection
         run: | 
