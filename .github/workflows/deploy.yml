@@ -28,20 +28,20 @@ jobs:
       # Set up kubectl
       - name: Set up Kubernetes Configuration
         run: |
-          mkdir -p ~/.minikube/profiles/minikube
-          mkdir -p ~/.kube
+          sudo mkdir -p ~/.minikube/profiles/minikube
+          sudo mkdir -p ~/.kube
           
-          echo "${{ secrets.KUBE_CLIENT_CERT }}" | base64 --decode | tee ~/.minikube/profiles/minikube/client.crt > /dev/null
-          echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode | tee ~/.minikube/profiles/minikube/client.key > /dev/null
-          echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode | tee ~/.minikube/ca.crt > /dev/null
-          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode | tee ~/.kube/config > /dev/null
+          echo "${{ secrets.KUBE_CLIENT_CERT }}" | base64 --decode | sudo tee ~/.minikube/profiles/minikube/client.crt > /dev/null
+          echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode | sudo tee ~/.minikube/profiles/minikube/client.key > /dev/null
+          echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode | sudo tee ~/.minikube/ca.crt > /dev/null
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode | sudo tee ~/.kube/config > /dev/null
           
-          sed -i 's|https://192.168.49.2:8443|https://c82c-2405-201-303c-4069-d0e-4273-d4cb-3377.ngrok-free.app|g' ~/.kube/config
+          sudo sed -i 's|https://192.168.49.2:8443|https://c82c-2405-201-303c-4069-d0e-4273-d4cb-3377.ngrok-free.app|g' ~/.kube/config
           
-          chmod 600 ~/.minikube/profiles/minikube/*
-          chmod 600 ~/.kube/config
-          
-          chown -R $USER ~/.minikube ~/.kube
+          sudo chmod 600 ~/.minikube/profiles/minikube/*
+          sudo chmod 600 ~/.kube/config
+
+          sudo chown -R $USER ~/.minikube ~/.kube
       
       - name: Test Kubernetes Connection
         run: | 
