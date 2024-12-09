@@ -40,6 +40,8 @@ jobs:
           
           sudo chmod 600 ~/.minikube/profiles/minikube/*
           sudo chmod 600 ~/.kube/config
+
+          chown -R $USER ~/.minikube ~/.kube
       
       - name: Test Kubernetes Connection
         run: | 
