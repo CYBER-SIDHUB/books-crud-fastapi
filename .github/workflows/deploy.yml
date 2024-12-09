@@ -28,9 +28,9 @@ jobs:
       # Set up kubectl
       - name: Set up Kubernetes Configuration
         run: |
-          mkdir -p /home/devsidd/.minikube/profiles/minikube
-          mkdir -p /home/devsidd/.kube
-
+          sudo mkdir -p /home/devsidd/.minikube/profiles/minikube
+          sudo mkdir -p /home/devsidd/.kube
+          
           ls -l /home/devsidd/.minikube/profiles/minikube
           ls -l /home/devsidd/.kube
       
