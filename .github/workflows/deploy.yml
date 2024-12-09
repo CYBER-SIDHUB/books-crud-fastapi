@@ -28,18 +28,18 @@ jobs:
       # Set up kubectl
       - name: Set up Kubernetes Configuration
         run: |
-          sudo mkdir -p /home/devsidd/.minikube/profiles/minikube
-          sudo mkdir -p /home/devsidd/.kube
+          sudo mkdir -p ~/.minikube/profiles/minikube
+          sudo mkdir -p ~/.kube
           
-          echo "${{ secrets.KUBE_CLIENT_CERT }}" | base64 --decode | sudo tee /home/devsidd/.minikube/profiles/minikube/client.crt > /dev/null
-          echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode | sudo tee /home/devsidd/.minikube/profiles/minikube/client.key > /dev/null
-          echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode | sudo tee /home/devsidd/.minikube/ca.crt > /dev/null
-          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode | sudo tee /home/devsidd/.kube/config > /dev/null
-
-          sed -i 's|https://192.168.49.2:8443|https://c82c-2405-201-303c-4069-d0e-4273-d4cb-3377.ngrok-free.app|g' /home/devsidd/.kube/config
+          echo "${{ secrets.KUBE_CLIENT_CERT }}" | base64 --decode | sudo tee ~/.minikube/profiles/minikube/client.crt > /dev/null
+          echo "${{ secrets.KUBE_CLIENT_KEY }}" | base64 --decode | sudo tee ~/.minikube/profiles/minikube/client.key > /dev/null
+          echo "${{ secrets.KUBE_CA_CERT }}" | base64 --decode | sudo tee ~/.minikube/ca.crt > /dev/null
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode | sudo tee ~/.kube/config > /dev/null
           
-          sudo chmod 600 /home/devsidd/.minikube/profiles/minikube/*
-          sudo chmod 600 /home/devsidd/.kube/config
+          sed -i 's|https://192.168.49.2:8443|https://c82c-2405-201-303c-4069-d0e-4273-d4cb-3377.ngrok-free.app|g' ~/.kube/config
+          
+          sudo chmod 600 ~/.minikube/profiles/minikube/*
+          sudo chmod 600 ~/.kube/config
       
       - name: Test Kubernetes Connection
         run: | 
